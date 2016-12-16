@@ -88,13 +88,13 @@ echo
 if [ $current -eq 1 ]; then
     git clone --depth 1 https://github.com/facebook/folly
     git clone --depth 1 https://github.com/facebook/fbthrift
-    git clone https://github.com/facebook/thpp
+    git clone https://github.com/kvrd18/thpp
     git clone https://github.com/facebook/fblualib
     git clone https://github.com/facebook/wangle
 else
     git clone -b v0.35.0  --depth 1 https://github.com/facebook/folly
     git clone -b v0.24.0  --depth 1 https://github.com/facebook/fbthrift
-    git clone -b v1.0 https://github.com/facebook/thpp
+    git clone https://github.com/kvrd18/thpp
     git clone -b v1.0 https://github.com/facebook/fblualib
 fi
 
