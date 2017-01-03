@@ -30,37 +30,27 @@ INCLUDE_DIRECTORIES(
   ${THPP_INCLUDE_DIR}
 )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++14")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 SET(src
   LuaUtils.cpp
-  Future.cpp
-  Reactor.cpp
-  UserData.cpp
 )
 
 SET(h
   LuaUtils.h
   LuaUtils-inl.h
-  Future.h
-  Reactor.h
-  UserData.h
-  CrossThreadRegistry.h
 )
 
 SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-as-needed")
 ADD_LIBRARY(fblualib SHARED ${src})
 
-FIND_LIBRARY(lib_luaT luaT
-  HINTS ${Torch_INSTALL_LIB})
-IF(NOT lib_luaT)
-  MESSAGE(FATAL_ERROR "libluaT not found")
-ENDIF()
 TARGET_LINK_LIBRARIES(fblualib
-  ${lib_luaT} ${THPP_LIBRARIES} ${FOLLY_LIBRARIES} ${GLOG_LIBRARIES})
+  luaT ${THPP_LIBRARIES} ${FOLLY_LIBRARIES} ${GLOG_LIBRARIES})
+
+SET(CMAKE_INSTALL_PREFIX ${SAVED_CMAKE_INSTALL_PREFIX})
 
 INSTALL(TARGETS fblualib
-        LIBRARY DESTINATION ${Torch_INSTALL_LIB})
+        LIBRARY DESTINATION lib)
 
 INSTALL(FILES ${h}
-        DESTINATION "${Torch_INSTALL_INCLUDE}/${MLI_INCLUDE_RELATIVE_OUTPUT_DIR}")
+        DESTINATION "include/${MLI_INCLUDE_RELATIVE_OUTPUT_DIR}")
